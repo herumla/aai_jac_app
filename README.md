@@ -4,7 +4,7 @@ This is a multi-page Streamlit app that was built to demo how to leverage an AI 
 
 ## Pre-requisite
 
-Ensure an AssemblyAI API Key is included in the ~/. streamlit/secrets.toml file (Streamlit docs on secrets.toml [here](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/secrets-management#develop-locally-with-secrets))
+Ensure an AssemblyAI API Key is included in the `~/. streamlit/secrets.toml` file (Streamlit docs on secrets.toml [here](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/secrets-management#develop-locally-with-secrets))
 
 ## Components
 
