@@ -5,7 +5,7 @@ import app_utils as au
 #This is the module which has the account class
 from account import get_account
 
-#This is the call analysis page where we will display the 1. Call Summary 2. Call Action Items and 3. Display a button to navigate to the Notetaker QA app
+#This is the call analysis page where we will display the 1. Call Summary 2. Call Action Items and 3. Display a button to navigate to the JAC Notetaker QA page
 
 #Read the secrets from the .streamlit/secrets.toml file 
 #https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/secrets-management#develop-locally-with-secrets
@@ -19,6 +19,7 @@ def get_call_transcription(file_url):
     return transcript.id
 
 #Get Call Summary via AssemblyAI LeMUR
+#We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
 @st.cache_data
 def get_call_transcript_summary(call_transcript_id, call_context):
     transcript_from_id = aai.Transcript.get_by_id(call_transcript_id)
@@ -32,6 +33,7 @@ def get_call_transcript_summary(call_transcript_id, call_context):
     return result.response
 
 #Get Call Action Items via AssemblyAI LeMUR
+#We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
 @st.cache_data
 def get_call_transcript_action_items(call_transcript_id, call_context):
     transcript_from_id = aai.Transcript.get_by_id(call_transcript_id)
@@ -46,7 +48,7 @@ def get_call_transcript_action_items(call_transcript_id, call_context):
 
     return result.response
 
-#Transcribe Call
+#Transcribe File
 file_url = "https://gtusieyatzvotohzvlfy.supabase.co/storage/v1/object/public/take-home/video1982379628.mp4?t=2023-05-01T16%3A31%3A40.958Z"
 
 #Hardcoding the transcript id so that I don't need to transcribe it every time

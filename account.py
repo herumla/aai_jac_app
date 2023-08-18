@@ -1,3 +1,4 @@
+#A class used to represent a JAC CRM Account 
 class Account:
     def __init__(self, name, accountID, owner, annualRevenue, website, headcount, industry, phone, customerSegment):
         self.name = name

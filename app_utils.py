@@ -1,3 +1,5 @@
+#There doesn't seem to be a way to natively switch between pages via button clicks in Streamlit so this allows for that functionality to work
+
 def switch_page(page_name: str):
     from streamlit.runtime.scriptrunner import RerunData, RerunException
     from streamlit.source_util import get_pages

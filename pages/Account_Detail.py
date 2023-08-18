@@ -15,13 +15,10 @@ calls = [ f"{selected_account.name}: AssemblyAI Discovery Call - 17 Aug, 2023",
           f"{selected_account.name}: AssemblyAI Intro - 15 Aug, 2023"
         ]
 
-
-# Dropdown to select an account
-
-
 # Display Account Details
 st.title(selected_account.name)
 
+#Create two sections in the page, one for overview and one for activity
 left, right = st.columns(2)
 
 #Display Account Overview section with the populated account details
@@ -41,7 +38,7 @@ with left:
             st.subheader("Annual Revenue")
             st.text(selected_account.annualRevenue)
             st.subheader("Billing Address")
-            st.text("888 Airport Road, Burlingamge, CA")
+            st.text("888 Airport Road, Burlingame, CA")
             
 
         with col2:
@@ -61,6 +58,7 @@ with left:
     with tab3:
         st.header("News")
         st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
+        
 
 #Display Account Activity with the populated call details
 with right:

@@ -1,18 +1,12 @@
-import openai
 import streamlit as st
-import os
-from dotenv import load_dotenv
-import random
-import time
 import assemblyai as aai
-import pandas as pd
 
-#6tx8k1jrfz-3c30-49f9-9f28-2ad58a90aefc
 #Assembly AI
-ASSEMBLYAI_API_TOKEN = "de044a33c5064b1cabfa17588936c4af"
-aai.settings.api_key = f"{ASSEMBLYAI_API_TOKEN}"
+aai.settings.api_key = aai.settings.api_key = st.secrets.assemblyai.api_key
 
 
+#Get Question Answer via AssemblyAI LeMUR
+#We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
 @st.cache_data
 def get_question_answer(call_transcript_id, user_question, call_context):
     questions = [
@@ -28,23 +22,11 @@ def get_question_answer(call_transcript_id, user_question, call_context):
 
     return result.response[0].answer
 
-
-#The AssemblyAI marketing team is meeting to discuss a new marketing campaign
+#adding call context
 call_context = "A early stage sales discovery call where an Assembly AI sales rep understands the use case of their customer and pithces AssemblyAI's product"
 call_transcript_id = "6tx8k1jrfz-3c30-49f9-9f28-2ad58a90aefc"
 
 st.title("JAC Notetaker")
-
-###Sidebar
-# List of options for the selectbox
-accounts_list = [
-    "TechCorp Inc.",
-    "HealthCare Plus",
-    "EduTech Innovations",
-    "GreenEnergy Solutions",
-]
-
-# Create the selectbox in the main section of the page
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -54,7 +36,6 @@ if "messages" not in st.session_state:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-
 
 
 # Accept user input
