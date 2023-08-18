@@ -13,6 +13,7 @@ aai.settings.api_key = st.secrets.assemblyai.api_key
 
 
 #Transcribe the Video Call
+@st.cache_data(show_spinner=False)
 def get_call_transcription(file_url):
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(file_url)
@@ -20,7 +21,7 @@ def get_call_transcription(file_url):
 
 #Get Call Summary via AssemblyAI LeMUR
 #We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_call_transcript_summary(call_transcript_id, call_context):
     transcript_from_id = aai.Transcript.get_by_id(call_transcript_id)
 
@@ -34,7 +35,7 @@ def get_call_transcript_summary(call_transcript_id, call_context):
 
 #Get Call Action Items via AssemblyAI LeMUR
 #We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_call_transcript_action_items(call_transcript_id, call_context):
     transcript_from_id = aai.Transcript.get_by_id(call_transcript_id)
     
@@ -67,12 +68,14 @@ st.title(call_title)
 
 #Generate the call summary. The get_call_transcript_summary function is cached using @st.cache_data so that we only need to generate this summary once
 st.subheader("Summary")
-call_summary = get_call_transcript_summary(transcript_id, call_context)
+with st.spinner('Gathering Summary of the call...'):
+    call_summary = get_call_transcript_summary(transcript_id, call_context)
 st.write(call_summary)
 
 #Generate the call action items. The get_call_transcript_action_items function is cached using @st.cache_data so that we only need to generate this action items once
 st.subheader("Action Items")
-call_action_items = get_call_transcript_action_items(transcript_id, call_context)
+with st.spinner('Gathering Actions Items from the call...'):
+    call_action_items = get_call_transcript_action_items(transcript_id, call_context)
 st.write(call_action_items)
 
 #If user choses to ask the JAC Notetaker, swithc to the JAC Notetake QA Page

@@ -7,7 +7,7 @@ aai.settings.api_key = aai.settings.api_key = st.secrets.assemblyai.api_key
 
 #Get Question Answer via AssemblyAI LeMUR
 #We are caching this data so as long as the input params of this function is the same, it will return the result from the cache instead of running again
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_question_answer(call_transcript_id, user_question, call_context):
     questions = [
         aai.LemurQuestion(
@@ -48,8 +48,8 @@ if user_question := st.chat_input("Please ask any questions about this call here
     with st.chat_message("user"):
         st.markdown(user_question)
     # Display assistant response in chat message container
-
-    prompt_response = get_question_answer(call_transcript_id, user_question, call_context)
+    with st.spinner('Gathering an answer for you...'):
+        prompt_response = get_question_answer(call_transcript_id, user_question, call_context)
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
